@@ -14,7 +14,6 @@ const Customers = () => {
     const fetchCustomer = async () => {
         const data: Customer[] = await getCustomerData();  // Call the server action
         setUsers(data);
-        console.log('Customers:', data);
     }
 
 

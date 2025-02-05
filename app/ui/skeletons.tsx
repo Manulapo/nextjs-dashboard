@@ -18,13 +18,11 @@ export function CardSkeleton() {
   );
 }
 
-export function CardsSkeleton() {
+export function CardsSkeleton({ cardsNumber }: { cardsNumber: number }) {
+  const cards = Array.from({ length: cardsNumber });
   return (
     <>
-      <CardSkeleton />
-      <CardSkeleton />
-      <CardSkeleton />
-      <CardSkeleton />
+      {cards.map((_, i) => <CardSkeleton key={i} />)}
     </>
   );
 }

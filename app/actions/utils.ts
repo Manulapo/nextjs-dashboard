@@ -1,9 +1,9 @@
 import { Db } from "mongodb";
-import { getDb } from "../lib/mongodb";
+import { connectToDatabase } from "../lib/mongodb";
 
 export const getDbCollectionData = async (collectionName: string) => {
     try {
-        const db: Db = await getDb();
+        const db: Db = await connectToDatabase();
         const collection = db.collection(collectionName);
         const data = await collection.find({}).toArray();
         return data;
@@ -16,7 +16,7 @@ export const getDbCollectionData = async (collectionName: string) => {
 
 export const postDbCollectionData = async (collectionName: string, data: any) => {
     try {
-        const db: Db = await getDb();
+        const db: Db = await connectToDatabase();
         const collection = db.collection(collectionName);
         const result = await collection.insertOne(data);
         return result;
@@ -29,7 +29,7 @@ export const postDbCollectionData = async (collectionName: string, data: any) =>
 
 export const putDbCollectionData = async (collectionName: string, data: any) => {
     try {
-        const db: Db = await getDb();
+        const db: Db = await connectToDatabase();
         const collection = db.collection(collectionName);
         const result = await collection.updateOne({ id: data.id }, { data });
         return result;
@@ -42,7 +42,7 @@ export const putDbCollectionData = async (collectionName: string, data: any) => 
 
 export const deleteDbCollectionData = async (collectionName: string, id: string) => {
     try {
-        const db: Db = await getDb();
+        const db: Db = await connectToDatabase();
         const collection = db.collection(collectionName);
         const result = await collection.deleteOne({ id });
         return result;
