@@ -52,3 +52,7 @@ export const deleteDbCollectionData = async (collectionName: string, id: string)
         throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
     }
 }
+
+export function simulateDelay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
