@@ -3,12 +3,11 @@
 import { ObjectId } from 'mongodb';
 import { Invoice, LatestInvoice, LatestInvoiceRaw } from '../lib/models';
 import { connectToDatabase } from '../lib/mongodb';
-import { getDbCollectionData } from './utils';
 import { formatCurrency } from '../lib/utils';
+import { getDbCollectionData } from './utils';
 
 export async function fetchInvoices(): Promise<Invoice[]> {
     const data = await getDbCollectionData('invoices');
-    console.log('Invoices:', data);
     const invoices: Invoice[] = data.map((doc) => ({
         id: doc.id.toString(),
         customer_id: doc.customer_id.toString(),
@@ -72,12 +71,13 @@ export async function fetchFilteredInvoices(query: string, currentPage: number, 
 export async function fetchInvoiceById(id: string) {
     try {
         const db = await connectToDatabase();
-        
+
         // Fetch invoice by ID
         const invoice = await db.collection('invoices').findOne({ _id: new ObjectId(id) });
 
         if (!invoice) {
-            throw new Error('Invoice not found.');
+            console.log('Invoice not found');
+            return null;
         }
 
         // Transform `_id` and other fields before returning
@@ -177,13 +177,6 @@ export async function fetchLatestInvoices() {
     }
 }
 
-export const addNewInvoice = async (invoice: Invoice) => {
-    try {
-        const db = await connectToDatabase();
-        const result = await db.collection('invoices').insertOne(invoice);
-        return result.insertedId;
-    } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to add new invoice.');
-    }
-}
+
+
+

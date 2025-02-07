@@ -1,4 +1,4 @@
-import { fetchLatestInvoices } from '@/app/actions/invoicesActions';
+import { fetchLatestInvoices } from '@/app/actions/fetchInvoices';
 import { lusitana } from '@/app/ui/fonts';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
@@ -17,7 +17,7 @@ export default async function LatestInvoices() {
           {latestInvoices.map((invoice, i) => {
             return (
               <div
-                key={invoice.id}
+                key={i}
                 className={clsx(
                   'flex flex-row items-center justify-between py-4',
                   {

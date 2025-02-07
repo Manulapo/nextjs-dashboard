@@ -1,9 +1,9 @@
-import { fetchInvoicesPages } from '@/app/actions/invoicesActions';
-import Heading from '@/app/ui/heading';
+import { fetchInvoicesPages } from '@/app/actions/fetchInvoices';
+import Heading from '@/app/ui/misc/heading';
 import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import Pagination from '@/app/ui/invoices/pagination';
 import Table from '@/app/ui/invoices/table';
-import Search from '@/app/ui/search';
+import Search from '@/app/ui/misc/search';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 

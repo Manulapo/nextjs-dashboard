@@ -1,6 +1,6 @@
 import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchCustomers } from '@/app/actions/customerActions';
+import { fetchCustomers } from '@/app/actions/fetchCustomers';
 import { CustomerField } from '@/app/lib/models';
 
 export default async function Page() {

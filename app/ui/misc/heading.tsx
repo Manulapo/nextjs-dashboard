@@ -1,4 +1,4 @@
-import { lusitana } from "./fonts";
+import { lusitana } from "../fonts";
 
 const Heading = ({ title }: { title: string }) => {
     return (

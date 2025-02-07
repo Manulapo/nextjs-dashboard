@@ -9,10 +9,10 @@ import {
   PlusIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from '@/app/ui/button';
+import { Button } from '@/app/ui/misc/button';
 import { createInvoice } from '@/app/actions/createInvoice';
 
-export default function Form({ invoice, customers }: { invoice?: Invoice, customers: CustomerField[] }) {
+export default function Form({ customers }: { invoice?: Invoice, customers: CustomerField[] }) {
   const addNewCustomer = (e: any) => {
     e.preventDefault();
     alert('Add new customer');

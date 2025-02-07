@@ -1,4 +1,4 @@
-import { fetchRevenue } from '@/app/actions/revenueActions';
+import { fetchRevenue } from '@/app/actions/fetchRevenues';
 import { generateYAxis } from '@/app/lib/utils';
 import { lusitana } from '@/app/ui/fonts';
 import { CalendarIcon } from '@heroicons/react/24/outline';

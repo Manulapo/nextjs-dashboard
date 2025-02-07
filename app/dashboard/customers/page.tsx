@@ -1,5 +1,5 @@
 'use client';
-import { getCustomerData } from '@/app/actions/customerActions';
+import { getCustomerData } from '@/app/actions/fetchCustomers';
 import { Customer } from '@/app/lib/models';
 import { useEffect, useState } from 'react';
 
