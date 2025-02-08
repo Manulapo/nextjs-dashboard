@@ -8,6 +8,8 @@ import { getDbCollectionData } from './utils';
 
 export async function fetchInvoices(): Promise<Invoice[]> {
     const data = await getDbCollectionData('invoices');
+    if(!data) return [];
+    
     const invoices: Invoice[] = data.map((doc) => ({
         id: doc.id.toString(),
         customer_id: doc.customer_id.toString(),

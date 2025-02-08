@@ -7,10 +7,8 @@ export const getDbCollectionData = async (collectionName: string) => {
         const collection = db.collection(collectionName);
         const data = await collection.find({}).toArray();
         return data;
-    } catch (error: any) {
-        console.error('Error on Collections:', collectionName);
-        // Log completo dell'errore
-        throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
+    } catch (error: unknown) {
+        logError(error, collectionName);
     }
 }
 
@@ -20,10 +18,8 @@ export const postDbCollectionData = async (collectionName: string, data: any) =>
         const collection = db.collection(collectionName);
         const result = await collection.insertOne(data);
         return result;
-    } catch (error: any) {
-        console.error('Error on Collections:', collectionName);
-        // Log completo dell'errore
-        throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
+    } catch (error: unknown) {
+        logError(error, collectionName);
     }
 }
 
@@ -33,10 +29,8 @@ export const putDbCollectionData = async (collectionName: string, data: any) => 
         const collection = db.collection(collectionName);
         const result = await collection.updateOne({ id: data.id }, { data });
         return result;
-    } catch (error: any) {
-        console.error('Error on Collections:', collectionName);
-        // Log completo dell'errore
-        throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
+    } catch (error: unknown) {
+        logError(error, collectionName);
     }
 }
 
@@ -46,13 +40,23 @@ export const deleteDbCollectionData = async (collectionName: string, id: string)
         const collection = db.collection(collectionName);
         const result = await collection.deleteOne({ id });
         return result;
-    } catch (error: any) {
-        console.error('Error on Collections:', collectionName);
-        // Log completo dell'errore
-        throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
+    } catch (error: unknown) {
+        logError(error, collectionName);
     }
 }
 
 export function simulateDelay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export const logError = (error: unknown, collectionName?:string) => {
+    if(collectionName){
+        console.error('Error on Collections:', collectionName);
+    }
+
+    if (error instanceof Error) {
+        throw new Error(`Errore durante la connessione o la query al database: ${error.message}`);
+    } else {
+        throw new Error('Errore durante la connessione o la query al database: errore sconosciuto');
+    }
 }

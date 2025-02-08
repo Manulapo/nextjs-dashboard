@@ -7,6 +7,7 @@ import { getDbCollectionData } from './utils';
 
 export async function getCustomerData(): Promise<Customer[]> {
     const data = await getDbCollectionData('customers');
+    if(!data) return [];
     const customers: Customer[] = data.map((doc) => ({
         id: doc.id.toString(),
         name: doc.name,
