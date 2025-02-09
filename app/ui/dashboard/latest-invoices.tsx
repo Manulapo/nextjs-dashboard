@@ -1,4 +1,4 @@
-import { fetchLatestInvoices } from '@/app/actions/fetchInvoices';
+import { fetchLatestInvoices } from '@/app/actions/invoiceActions';
 import { lusitana } from '@/app/ui/fonts';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';

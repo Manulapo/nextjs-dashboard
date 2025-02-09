@@ -1,17 +1,17 @@
 'use client';
 
+import { State, updateInvoice } from '@/app/actions/invoiceActions';
 import { CustomerField, InvoiceForm } from '@/app/lib/models';
+import { Button } from '@/app/ui/misc/button';
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
+  ExclamationCircleIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { Button } from '@/app/ui/misc/button';
-import { updateInvoice } from '@/app/actions/updateInvoice';
 import { useActionState } from 'react';
-import { State } from '@/app/actions/createInvoice';
 
 export default function EditInvoiceForm({
   invoice,
@@ -23,18 +23,17 @@ export default function EditInvoiceForm({
 
   const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+  // we use bind to pass the invoice id to the updateInvoice function as a fixed argument even if the function is called later with other arguments
   const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
 
   return (
     <form action={formAction}>
-      {/* error log */}
-      <div id="form-error" aria-live="polite" aria-atomic="true">
-        {state.message &&
-          <p className="mt-2 text-sm text-red-500 font-medium bg-red-200 rounded-md size-max px-3 my-2" role="alert">
-            {state.message}
-          </p>
-        }
-      </div>
+      {state.message && (
+        <>
+          <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+          <p className="text-sm text-red-500">{state.message}</p>
+        </>
+      )}
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">

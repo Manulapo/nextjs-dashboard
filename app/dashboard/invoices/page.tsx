@@ -1,4 +1,4 @@
-import { fetchInvoicesPages } from '@/app/actions/fetchInvoices';
+import { fetchInvoicesPages } from '@/app/actions/invoiceActions';
 import Heading from '@/app/ui/misc/heading';
 import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import Pagination from '@/app/ui/invoices/pagination';

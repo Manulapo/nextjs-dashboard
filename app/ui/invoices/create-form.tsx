@@ -1,12 +1,13 @@
 'use client';
 
-import { createInvoice, State } from '@/app/actions/createInvoice';
+import { createInvoice, State } from '@/app/actions/invoiceActions';
 import { CustomerField, Invoice } from '@/app/lib/models';
 import { Button } from '@/app/ui/misc/button';
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
+  ExclamationCircleIcon,
   PlusIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
@@ -14,24 +15,24 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 
 export default function Form({ customers }: { invoice?: Invoice, customers: CustomerField[] }) {
-  const addNewCustomer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    alert('Add new customer');
-  };
 
   const initialState: State = { message: null, errors: {} };
+  const [newCustomer, setNewCustomer] = useState(false);
   const [state, formAction] = useActionState(createInvoice, initialState);
 
+  const addNewCustomer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setNewCustomer(true);
+  };
+
   return (
-    <form action={formAction}>
-      {/* error log */}
-      <div id="form-error" aria-live="polite" aria-atomic="true">
-        {state.message &&
-          <p className="mt-2 text-sm text-red-500 font-medium bg-red-200 rounded-md size-max px-3 my-2" role="alert">
-            {state.message}
-          </p>
-        }
-      </div>
+    <form action={(formdata) => formAction(formdata)}>
+      {state.message && (
+        <>
+          <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+          <p className="text-sm text-red-500">{state.message}</p>
+        </>
+      )}
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
@@ -167,7 +168,8 @@ export default function Form({ customers }: { invoice?: Invoice, customers: Cust
           Cancel
         </Link>
         <Button type="submit"
-          className='disabled:opacity-50'>Create Invoice</Button>
+          className='disabled:opacity-50'
+        >Create Invoice</Button>
       </div>
     </form>
   );
