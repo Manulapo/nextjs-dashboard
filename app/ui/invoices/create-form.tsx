@@ -17,13 +17,7 @@ import { useActionState, useState } from 'react';
 export default function Form({ customers }: { invoice?: Invoice, customers: CustomerField[] }) {
 
   const initialState: State = { message: null, errors: {} };
-  const [newCustomer, setNewCustomer] = useState(false);
   const [state, formAction] = useActionState(createInvoice, initialState);
-
-  const addNewCustomer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setNewCustomer(true);
-  };
 
   return (
     <form action={(formdata) => formAction(formdata)}>
@@ -67,13 +61,6 @@ export default function Form({ customers }: { invoice?: Invoice, customers: Cust
               </select>
               <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
-
-            <button className="flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 flex shrink-0"
-              onClick={addNewCustomer}
-            >
-              Add new
-              <PlusIcon className="h-5 md:ml-4" />
-            </button>
           </div>
 
         </div>

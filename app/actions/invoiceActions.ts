@@ -10,6 +10,7 @@ import { getDbCollectionData } from './utils';
 
 export async function fetchInvoices(): Promise<Invoice[]> {
     const data = await getDbCollectionData('invoices');
+    console.log({ invoices: data })
     if (!data) return [];
 
     const invoices: Invoice[] = data.map((doc) => ({
@@ -142,9 +143,9 @@ export async function fetchInvoicesPages(query: string, itemsPerPage = 6) {
 
 export async function fetchLatestInvoices() {
     try {
-        // await simulateDelay(2000);
         const db = await connectToDatabase();
-        const data = await db.collection<LatestInvoiceRaw>('invoices').aggregate([
+        // in mongodb i want to have the latest invoices linked to the customers related with also name, image_url and email
+        const data = await db.collection('invoices').aggregate([
             {
                 $lookup: {
                     from: 'customers',
@@ -156,24 +157,23 @@ export async function fetchLatestInvoices() {
             { $unwind: '$customer_data' },
             { $sort: { date: -1 } },
             { $limit: 5 },
-            {
-                $project: {
-                    id: 1,
-                    amount: 1,
-                    'customer_data.name': 1,
-                    'customer_data.image_url': 1,
-                    'customer_data.email': 1,
-                },
-            },
         ]).toArray();
 
-        return data.map((invoice) => ({
-            ...invoice,
-            amount: formatCurrency(invoice.amount),
-            image_url: invoice.customer_data.image_url,
-            name: invoice.customer_data.name,
-            email: invoice.customer_data.email,
-        })) as LatestInvoice[];
+        console.log({ latestInvoices: data });
+
+        return data.map((invoice) => {
+            if (!invoice.customer_data) {
+                throw new Error(`Customer data missing for invoice ${invoice._id}`);
+            }
+
+            return {
+                id: invoice._id.toString(), // Convert ObjectId to string
+                amount: formatCurrency(invoice.amount),
+                image_url: invoice.customer_data.image_url,
+                name: invoice.customer_data.name,
+                email: invoice.customer_data.email,
+            };
+        }) as LatestInvoice[];
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch the latest invoices.');

@@ -1,6 +1,11 @@
 import RegisterForm from '@/app/ui/auth/register-form';
 import { Suspense } from 'react';
 import AcmeLogo from '../ui/misc/acme-logo';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Register',
+};
 
 export default function RegisterPage() {
   return (

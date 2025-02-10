@@ -11,10 +11,17 @@ export type User = {
 };
 
 export type Customer = {
+  _id?: string;
   id: string;
   name: string;
   email: string;
   image_url: string;
+};
+
+export interface CustomerInvoiceStatus extends Customer {
+  total_invoices: number;
+  total_pending: number;
+  total_paid: number;
 };
 
 export type Invoice = {
