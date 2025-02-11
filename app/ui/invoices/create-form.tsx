@@ -8,11 +8,10 @@ import {
   ClockIcon,
   CurrencyDollarIcon,
   ExclamationCircleIcon,
-  PlusIcon,
-  UserCircleIcon,
+  UserCircleIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 
 export default function Form({ customers }: { invoice?: Invoice, customers: CustomerField[] }) {
 

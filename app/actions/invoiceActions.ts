@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { connectToDatabase } from '../lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { Invoice, LatestInvoice, LatestInvoiceRaw } from '../lib/models';
+import { Invoice, LatestInvoice } from '../lib/models';
 import { formatCurrency } from '../lib/utils';
 import { getDbCollectionData } from './utils';
 

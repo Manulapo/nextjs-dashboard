@@ -1,3 +1,5 @@
+
+// avoid eslint any type error
 import { Db, Document, Filter } from "mongodb";
 import { connectToDatabase } from "../lib/mongodb";
 import bcrypt from 'bcrypt';
@@ -14,33 +16,11 @@ export const getDbCollectionData = async (collectionName: string, filter?: Filte
     }
 }
 
-export const postDbCollectionData = async (collectionName: string, data: any) => {
+export const postDbCollectionData = async (collectionName: string, data: Document) => {
     try {
         const db: Db = await connectToDatabase();
         const collection = db.collection(collectionName);
         const result = await collection.insertOne(data);
-        return result;
-    } catch (error: unknown) {
-        logError(error, collectionName);
-    }
-}
-
-export const putDbCollectionData = async (collectionName: string, data: any) => {
-    try {
-        const db: Db = await connectToDatabase();
-        const collection = db.collection(collectionName);
-        const result = await collection.updateOne({ id: data.id }, { data });
-        return result;
-    } catch (error: unknown) {
-        logError(error, collectionName);
-    }
-}
-
-export const deleteDbCollectionData = async (collectionName: string, id: string) => {
-    try {
-        const db: Db = await connectToDatabase();
-        const collection = db.collection(collectionName);
-        const result = await collection.deleteOne({ id });
         return result;
     } catch (error: unknown) {
         logError(error, collectionName);
@@ -63,7 +43,7 @@ export const logError = (error: unknown, collectionName?: string) => {
     }
 }
 
-async function hashExistingPasswords() {
+export async function hashExistingPasswords() {
   try {
     const db = await connectToDatabase();
     const users = await db.collection('users').find({}).toArray();
